@@ -1,0 +1,18 @@
+\documentclass[../main.tex]{subfiles}
+
+
+\begin{document}
+\section{Introduction}
+% So here I was about to write my project proposal, i guess it should include some research questions. But I really don't know maybe something about the fact taht we could use Reluplex to tighten bounds. Maybe it would work if we make it more into a question. hmmm, let me thinkg. Allright lets start with defining the problem.
+Deep Neural Networks(DNN) show a very high performance on a wide variety of tasks. However, the complexity of DNNs, makes it difficult to know whether the mapping from the inputs to outputs is correct for all possible input output pairs. This in turn prevents us from reasoning whether or not the DNN is correctly functioning over an input space \cite{szegedyIntriguingPropertiesNeural2014}. However, DNNs are often used in safety critical systems, such as for autonomous driving \cite{bojarskiEndEndLearning2016}. Thus it is important to find and verify properties of these DNNs.
+\par One such property of DNNs is to know when the network is safe to use. For this project I suggest a framework to iteratively apply formal solvers, to obtain input bounds that are guaranteed to produce a bounded output.
+I want to use tne Marabou\cite{katzMarabouFrameworkVerification2019} tool, which is an extension of Reluplex\cite{katzReluplexEfficientSMT2017}. Reluplex (and by extension Marabou) is capable of verifying whether certain outputs of the DNN are impossible to generate given some input space. However, Reluplex is unable to find bounds for input spaces under which restrictions are upheld. The main idea I want to apply here, is to iteratively apply the Marabou solver with larger input bounds until the solver finds a counter example showing the new bound to be too wide.
+\par Thus the research question I would like to answer in this project is:
+\begin{itemize}
+    \item How effective is my proposed framework in combination with Reluplex to construct safe input spaces?
+\end{itemize}
+Here I want to measure effectiveness in how wide the proposed approach would be able to construct the input space, within a limited time.
+
+
+\end{document}
+
