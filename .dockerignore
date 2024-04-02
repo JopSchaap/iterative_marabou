@@ -1,0 +1,12 @@
+tools/
+UNKNOWN.egg-info/
+tools/
+venv/
+marabou/
+docs/
+dist/
+build/
+.dockerignore
+Dockerfile
+.vscode/
+.git/
