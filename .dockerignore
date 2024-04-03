@@ -10,3 +10,4 @@ build/
 Dockerfile
 .vscode/
 .git/
+result/

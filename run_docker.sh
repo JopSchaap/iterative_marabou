@@ -5,4 +5,4 @@ podman build -t iterative-reluplex .
 
 podman run -it --replace --name my-exec iterative-reluplex $@
 
-podman cp my-exec:./result ./result
+podman cp my-exec:./result/ ./
