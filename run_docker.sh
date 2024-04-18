@@ -5,4 +5,4 @@ podman build -t iterative-marabou .
 
 podman run -it --replace --name my-exec2 iterative-marabou $@
 
-podman cp my-exec2:./result/ ./results2
+podman cp my-exec:./result/ ./
