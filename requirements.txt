@@ -17,7 +17,7 @@ google-pasta==0.2.0
 grpcio==1.62.1
 h5py==3.10.0
 humanfriendly==10.0
-idna==3.6
+idna==3.7
 ipython==8.22.2
 jedi==0.19.1
 keras==3.0.5
