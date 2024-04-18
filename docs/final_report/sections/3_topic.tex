@@ -1,0 +1,45 @@
+\documentclass[../main.tex]{subfiles}
+
+
+\begin{document}
+\section{Topic}\label{sec:topic}
+In the following Section I will start with first explaining the general structure of the framework. Hereafter, I will explain how to algorithm works. And finally I will explain why the algorithm works. And I will finish with an explanation on why this approach produces a Pareto optimal solution.
+
+\subsection*{Iterative Marabou}
+% The algorithm
+The iterative Marabou algorithm works by separating the upper and lower bound of each variable. These bounds are then again split into an optimistic bound and an pessimistic bound. The pessimistic bound is the lowest bound for which the Marabou solver has returned UNSAT, e.g. the largest values such that the output is restricted by the constraints. Meanwhile, the optimistic bounds contain the smallest bounds for which Marabou has returned SAT.
+
+The algorithm, during execution iteratively tries a new higher pessimistic bounds. The algorithm is described schematically in Figure \ref{fig:iter-marabou} and checks Marabou whether this new bound is still UNSAT, and if so increases the pessimistic bound to this new bound, if on the other hand the problem turns out to be SAT after setting the new bound then the algorithm reduces the pessimistic bound to this new value. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/iterative_reluplex.pdf}
+    \caption{The main loop of the Iterative Marabou, algorithm.}\label{fig:iter-marabou}
+\end{figure}
+
+The main intuition behind iterative Marabou is that increasing the optimistic bound of a variable can only every decrease the pessimistic bounds of all other problems, and never increase it. This intuition thus allows us to continuously tighten the space in which a true Pareto optimal solution lies.
+
+To let the technique work we require that we have at least one point for which the properties hold. Finding of this point is outside the scope of this report and I instead assume this starting point to be 0. For the project I want to create an algorithm as described below: 
+
+Algorithm \ref{alg:iter-marabou}, shows how the algorithm works. Here the algorithm is defined to take each iteration a random dimension, and then splits the search space in this dimension in two. On this bound the Marabou solver is called to check whether it upholds the constraints. If the constraints are upheld we have thus found a better pessimistic bound and can thus increase this. If the constraints are not upheld we know that there will be no bound greater than our tested bound that upholds the constraints and thus we reduce the optimistic bounds.
+
+\begin{algorithm}[H]
+\caption{Iterative Marabou algorithm}
+\label{alg:iter-marabou}
+\input{sections/psuedocode/iterative_reluplex.tex}
+\end{algorithm}
+
+
+\subsection*{Pareto OPtimality}
+This algorithm converges to a Pareto optimal solution. This is the case because of the following two facts. The algorithm never lowers the pessimistic bound such that a feasible value would be removed from the search space, as shown in Proof \ref{proof:no-worse}. And the lowering the optimistic bound cannot result into a better pareto optimal solution. These two facts together mean that the search space of all bounds decrease every iteration, and thus eventually converges to a Pareto optimal solution.
+
+
+\begin{proof}\label{proof:no-worse}
+$ $
+{\setlength{\parindent}{0pt}
+\input{sections/proof_reluplex.tex}
+}
+$ $
+\end{proof}
+
+\end{document}

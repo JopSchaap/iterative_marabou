@@ -1,0 +1,36 @@
+\documentclass[../main.tex]{subfiles}
+
+
+\begin{document}
+\section{Introduction}\label{sec:introduction}
+% So here I was about to write my project proposal, i guess it should include some research questions. But I really don't know maybe something about the fact taht we could use Reluplex to tighten bounds. Maybe it would work if we make it more into a question. hmmm, let me thinkg. Allright lets start with defining the problem.
+Deep Neural Networks(DNN) show a very high performance on a wide variety of tasks. However, the complexity of DNNs, makes it difficult to know whether the mapping from the inputs to outputs is correct for all possible input output pairs. This in turn prevents us from reasoning whether or not the DNN is correctly functioning over an input space \cite{szegedyIntriguingPropertiesNeural2014}. However, DNNs are often used in safety critical systems, such as for autonomous driving \cite{bojarskiEndEndLearning2016}. Thus it is important to find and verify properties of these DNNs.
+
+\textcite{katzReluplexEfficientSMT2017} devised a way to formally verify such properties. They devised the algorithm Reluplex. Reluplex is able to verify properties in the form of linear constraints on the input and output variables of a DNN. The Reluplex algorithm is sound and complete. Meaning, that whenever there exists a violation on the constraints then Reluplex is able to find it, and if there exists no such violation of the constraints then Reluplex proofs this.
+
+The Reluplex algorithm nevertheless, requires the user to define both an input space and a safe output space. However, the input space might not be clear when examining a problem. And instead, we might want to find the safe input space in which the DNN can be used, without violating some constraints on the output space. For instance one might seek to verify at which speeds an autonomous vehicle can safely drive while preventing the vehicle to brake too abruptly in any situation. 
+
+% One such property of DNNs is to know when the network is safe to use. For this project I suggest a framework to iteratively apply formal solvers, to obtain input bounds that are guaranteed to produce a bounded output.
+The approach presented in this paper uses the Marabou\cite{katzMarabouFrameworkVerification2019} tool, which is an extension of Reluplex\cite{katzReluplexEfficientSMT2017} to find these input spaces. Here the main idea is to iteratively apply the Marabou solver with larger input bounds until the solver finds a counter example showing the new bound to be too wide, and thus violating the output constraints.
+
+\subsection*{Research Question}
+Thus the research question I would like to answer in this project is:
+\begin{itemize}
+    \item How effective is the proposed framework in combination with Marabou to construct safe input spaces?
+\end{itemize}
+Here I want to measure effectiveness in how wide the proposed approach would be able to construct the input space, within a limited time.
+
+To help answer the research question I want to answer the following sub-questions.
+\begin{itemize}
+    \item How big is the performance impact from the proposed framework?
+    \item How well does the framework converge?
+\end{itemize}
+
+\subsection*{Approach}
+Finding this box can be seen as a multiple objective optimization problem, since we want to increase the width of the box in all dimensions as much as  possible. But when we increase the width of the box in one direction we might no longer be able to increase the size of the box in a different direction. In this paper I present an approach that guarantees converging to a pareto optimal solution for this problem. Here a pareto optimal solution is a box with certain dimensions such that one cannot increase one of the dimensions without reducing the other dimensions
+
+\subsection*{Paper Structure}
+This paper is organized as follows. First, in Section 2, I will discuss the preliminaries necessary to understand the rest of the paper. Hereafter, in Section 3, I will introduce the topic and method of the framework. Then, in Section 4, I will explain and discuss experimental results. Finally, in Section 5, I will give some concluding remarks and ideas for future work.
+
+\end{document}
+

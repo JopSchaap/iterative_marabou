@@ -1,0 +1,126 @@
+\documentclass[11pt,twoside,a4paper]{article}
+\usepackage[english]{babel} %English hyphenation
+
+\usepackage[final]{pdfpages} % including pdfpages
+\usepackage{amsmath} %Mathematical stuff
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{xcolor}
+%\usepackage{cite}
+\usepackage{booktabs}
+
+\usepackage{bookmark}
+
+%Hyperreferences in the document. (e.g. \ref is clickable)
+\usepackage{hyperref}
+%uncomment to break urls on '/'
+\def\UrlBreaks{\do\/\do-}
+
+%used for pretty code snippets
+\usepackage[newfloat]{minted}
+
+%graphics
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{float}
+
+%C-code
+\usepackage{listings}
+
+% Pseudo code
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% BOld math
+\usepackage{bm}
+ 
+
+\usepackage[backend=biber,style=ieee]{biblatex} %Imports biblatex package
+\addbibresource{/home/jop/Documents/uni/MsC_Software_Technology/Year_2/Seminar_Formal_Methods_for_Learned_Systems/iterative_reluplex/docs/project.bib} %Import the bibliography file
+
+%You can also use the pseudocode package. http://cacr.uwaterloo.ca/~dstinson/papers/pseudocode.pdf
+%\usepackage{pseudocode}
+\usepackage{a4wide,times}
+
+\newmintedfile[inputpython]{python}{%
+	linenos,
+	autogobble,
+	breaklines,
+	fontsize=\footnotesize,
+}
+
+%automata and state machines
+\usepackage{tikz}
+\usetikzlibrary{automata, arrows}
+
+\usepackage{caption}
+
+%http://tex.stackexchange.com/questions/229638/ddg#229653
+\usepackage{csquotes}
+
+\usepackage{subfiles} % Best loaded last in the preamble
+
+% Todos
+%The length marginparwidth is less than 2cm and will most likely cause issues with the appearance of inserted todonotes. The issue can be solved by adding a line like \setlength {\marginparwidth }{2cm} prior to loading the todonotes package..
+\setlength{\marginparwidth}{2cm}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\newcommand{\unsure}[2][]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
+\newcommand{\change}[2][]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
+\newcommand{\info}[2][]{\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,{#1}]{#2}}
+\newcommand{\improvement}[2][]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}}
+\newcommand{\thiswillnotshow}[2][1=]{\todo[disable,{#1}]{#2}}
+\newcommand{\TODO}[2][]{\todo[inline,#1]{TODO! #2}}
+
+% MATHSS########################################################
+\DeclareMathOperator{\Lagr}{\mathcal{L}}
+\DeclareMathOperator{\Gradient}{\nabla}
+\DeclareMathOperator{\Reals}{\mathbb{R}}
+\DeclareMathOperator{\Expec}{\mathbb{E}}
+\DeclareMathOperator{\Var}{Var}
+
+% ##############################################################
+
+\title{Seminar Formal Methods for Learned Systems, Project proposal\\
+\huge{Iterative Marabou}\\
+\large{tightening verifiable bounds}} %The title, e.g. Algoritmiek Assignment 1
+
+\author{
+	Jop Schaap %Change the author info, Name, netID(, studentnr.)
+}
+
+\newenvironment{code}{\captionsetup{type=listing}}{}
+\SetupFloatingEnvironment{listing}{name=Figure}
+
+\allowdisplaybreaks
+\begin{document}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+	language=C
+}
+\maketitle
+\line(1,0){400}
+%\clearpage
+
+%It is possible to automatically generate a Table of Contents or a Table of Algorithms and more.
+% \tableofcontents
+%\listofalgorithms
+
+\subfile{sections/1_introduction}
+\subfile{sections/2_preliminaries}
+\subfile{sections/3_topic}
+\subfile{sections/4_experiments_and_results}
+\subfile{sections/5_conclusion}
+% \subfile{sections/ex-5}
+
+\printbibliography
+
+\appendix
+
+% \subfile{sections/app_source_code.tex}
+
+\end{document}

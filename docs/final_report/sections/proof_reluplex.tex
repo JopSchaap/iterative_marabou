@@ -1,0 +1,40 @@
+
+Take $B_i^O$ for the optimistic bound for input variable $i$.
+
+Take $B_i^P$ for the pessimistic bound for input variable $i$.
+
+I denote $B^O$ as the set of all optimistic bounds.
+
+And I use $B^O - B_i^O +B'$ to denote the optimistic bound set wher bound $B_i^O$ is replaced with $B'$. Finally I use $UNSAT(B)/SAT(B)$ to denote that the bounds defined by $B$ are proven to be UNSAT and SAT respectively.
+
+We now need to proof the following:
+
+\begin{align}
+    \forall B_i' | (B_i^P < B_i' < B_i^O)\nexists B_j^P \text{ S.T. } \\
+    UNSAT(B^P - B_i^P + B_i') 
+    \rightarrow UNSAT(B^P - B_i^P + B_i' - B_j^O + B_j^P)
+\end{align}
+
+In other words, for all new bounds that result into an UNSAT solution it should be impossible to add a bound that previously caused the problem to be SAT to result into an UNSAT solution.
+
+I proof this by noting that:
+
+\begin{align}
+UNSAT(B^P)
+\end{align}
+
+and
+
+\begin{align}
+\forall B_i^O SAT(B^P - B_i^P + B_i^O)
+\end{align}
+
+Thus there must be an assignment outside of the bounds of $B^P$ but inside the bounds of $B^P - B_i^P + B_i^O$. From 1 we see that the newly added bounds are always strictly higher than the old bounds, thus we get that:
+
+\begin{align}
+B^P - B_i^P + B_i^O \subset B^P - B_i^P + B_i' - B_j^O + B_j^P
+\end{align}
+
+
+Thus since there exist a satisfying assignment in $B^P - B_i^P + B_i^O$ there also must exists a satisfying assignment to $B^P - B_i^P + B_i' - B_j^O + B_j^P$. 
+Thus we never prune a solution that is more Pareto optimal than every solution in our search space.

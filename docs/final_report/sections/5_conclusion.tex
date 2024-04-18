@@ -1,0 +1,26 @@
+\documentclass[../main.tex]{subfiles}
+
+
+\begin{document}
+\section{Conclusion and Future Work}\label{sec:Conclusion}
+To conclude I presented a framework that is able to converge to Pareto optimal solution for finding input boxes, given output constraints on the DNN. The proposed algorithm is guaranteed to converge to these Pareto optimal solution by iteratively applying formal solving methods. The framework is based upon the formal guarantees and only requires that the solver algorithm is able to either find counter examples or a guarantee that no counter example exists.
+
+The experiment shows that the technique fails to converge satisfyingly to nearly optimal solution. This mainly was caused by the Marabou algorithm taking longer and longer to run the more converged the bounds got. 
+
+Future work could focus on experimenting with more DNNs, since the DNN used for the experiment as shown in this paper turned out to be too complex to properly optimize. Experimenting with more DNNs might furthermore better highlight any potential strengths and weaknesses with this approach.
+
+An additional improvement to the proposed algorithm would be to try it with other solvers. For instance, \textcite{henriksenEfficientNeuralNetwork} developed a solver that uses adversarial search, and trades accuracy for correctness. One could for isntance use this method and assume the model to be adhering to the constraints when no counterexample is found within some timeout.
+
+Another possible future improvement is to use more techniques from multiple objective optimization to find more preferable since the current technique might find boxes that are very long in one direction and quite short in other dimensions. Instead one might prefer input spaces that have the biggest multiplicative volume, in other words the solution that maximizes Equation \ref{eq:max-box}. Future work could try to find better variable selection strategies to optimize these values.
+\begin{equation}\label{eq:max-box}
+    \sum_{i=1}^N x_i
+\end{equation}
+
+Finally, it should be possible to integrate the solver better with the proposed framework. The Marabou solver namely not only returns whether the constraints are met or not, but it also generates an assignment of variables that violate the constraints, these results could be used to update the optimistic bound more tightly. This technique should increase the performance of the framework since optimistic bounds are tightened faster, and it would also make the technique less reliant on the initialization of the optimistic bounds.
+% Future work should focuss on:
+%% Trying more complicated networks
+%% Right now the implementation finds a pareto optimal input, but more work might indicate ways to find an input with a bigger box size e.g. maximizing 
+%% Whenever Marabou returns SAT it also returns an assignment that violates the output constraint. Thus instead of updating the pessimistic bound based on the used bound one might try to use these returned values to reduce optimistic bound faster.
+
+\end{document}
+ 

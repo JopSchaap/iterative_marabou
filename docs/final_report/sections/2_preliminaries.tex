@@ -1,0 +1,33 @@
+\documentclass[../main.tex]{subfiles}
+
+
+\begin{document}
+\section{Preliminaries}\label{sec:preliminaries}
+In this section I will introduce terms and definition necessary to understand this work. I will start by first describing the inner workings of \textit{Simplex}, hereafter I will introduce \textit{Reluplex} and \textit{Marabou}. Finally, I will discuss the \textit{quick find} algorithm and how this helps our search.
+
+% \subsection{Simplex}
+
+
+\subsection*{Reluplex}
+The classical method of verifying properties come in the form of putting some constraints on the input and verifying that there exist no inputs in the constrained region that fall result into an illegal output region. Here the output region is similairly constrained. These constraints are herafter put into an solver that is able to verify if there exists any Assignment that both adheres to the input and to the output.
+
+Reluplex is such a solver designed to verify these properites, it does this by applying a technique based on the Simplex method. Reluplex is sound and complete, meaning that if there exists a violating input it will eventually find it, and if there does not exists such an input then it will prove this.
+
+The main strengths of Reluplex over that of regular Mixed Integer Programming(MIP), is that Reluplex is better able to deal with the ReLu activation functions. 
+
+Reluplex however does have some limitations, mainly it is not able to verify non linear constraints. Furthermore, it only supports the ReLu activation function. Finally, the process of verifying networks is computationally expensive and generally does not scale to large DNNs.\cite{katzReluplexEfficientSMT2017}
+% \unsure{Needs more citations}
+
+\subsection*{Marabou}
+Marabou is an enhancement build on top of the Reluplex algorithm. It uses the same underlying verification method based on Simplex. It furthermore comes with additional improvements that allow it to solve more complex DNNS. The most impactfull improvement is a divide and conquer mechanism that divides the input/output space into smaller sections when the overal network proofs to difficult to solve. Thus Marabou is a more sophisticated version of the original Reluplex algorithm, and hence for the experiments I will use Marabou.\cite{katzMarabouFrameworkVerification2019}
+% \unsure{Needs more citations}
+% \subsection{Quick find}
+% \TODO{Explain quickfind and also how to apply this in 2d space}
+
+\subsection*{Multi Objective Optimization}
+% The framework as described in Section 3, converges to a Pareto Optimal Solution. A Pareto Optimal Solution is a solution that cannot 
+The task as described in Section \ref{sec:introduction}, can be formulated as a multi objective optimization problem. This is formulated in the following way. The optimization problem we are trying to solve, is that we want to maximize the bounds on each input variable. However, these bounds are related, since if the bounds on one variable increases then the possible bounds on another variable might decrease. 
+
+A releated concept to Multi Objective Optimization, is Pareto Optimality. A solution is said to be Pareto optimal, if there exist no way to increase any of the objective values without decreasing another objective value\cite{stiglitzParetoOptimalityCompetition1981}. For our problem this thus entails that we cannot increase the size of the box in any dimensions without decreasing the size of the box in the other dimensions. 
+
+\end{document}

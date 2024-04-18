@@ -1,0 +1,57 @@
+\documentclass[../main.tex]{subfiles}
+
+
+\begin{document}
+\section{Experiments and Results}\label{sec:exper-and-results}
+In this section I will first start by explaining the experiments I performed on my algorithm. Hereafter, I will show and discuss the results obtained.
+
+\subsection*{Experimental Setup}
+I used a proof-of-concept implementation of the algorithm proposed. For the experiments I used the \texttt{ACASXU\_experimental\_v2a\_1\_1} DNN\cite{julianPolicyCompressionAircraft2016} to generate bounds for. I adapted this DNN by removing two second to last layers, since the original problem showed to take to long to obtain meaningful results. The resulting DNN had 5 layers, with a total of 410 parameters.
+
+For the experiments I chose one of the outputs and set a constant bound (in such a way that the $\bm{0}$ vector adheres to this property). Hereafter, I ran the Iterative Marabou algorithm for 50 iterations, and recorded the volume of the pessimistic and optimistic bounds.
+
+During preliminary testing I noticed that the Marabou verifier slowed down, for later iterations. To ensure I could still produce meaningful results I decided that for each iteration, to set a timeout of 240 seconds for Marabou, and let the algorithm assume the solver returned SAT, whenever Marabou timed out. It should be noted that this breaks the property that we converge to a pareto optimal solution.
+
+All experiments where run on a HP ZBook Studio G5, with an \textit{Intel(R) Core(TM) i7-8750H} cpu. The code ran in a docker container with the host os being Ubuntu 22.04.4. The code for the experiments, together with with instructions on how to run, can be accessed on github\footnote{\url{https://github.com/JopSchaap/iterative_marabou}}.
+
+
+\subsection*{Results}
+The resulting convergence graph is shown in Figure \ref{fig:convergence-graph-acas-1}. This graph shows the lower bound box size, and the upper bound box size. Here we see that the algorithm converges since the optimistic and pessimistic values are nearly equal after about 100 iterations.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{../../result/figure.pdf}
+    \caption{Convergence graph showing the size of the box for \texttt{ACASXU\_experimental\_v2a\_1\_1}, with the output constraint of $y_2 < 0.8$ }
+    \label{fig:convergence-graph-acas-1}
+\end{figure}
+
+
+
+\subsection*{Very Simple Net}
+To show the algorithm working I also did some experiments on the \texttt{ACASXU-\_run2a-\_1\_1\_tiny}, which is part of the test DNNs for Marabou. This DNN can be found on the Marabou github\footnote{\url{https://github.com/NeuralNetworkVerification/Marabou}}. This DNN has just 2 layers, with a total of 90 parameters.
+
+Figure \ref{fig:convergence-graph-acas-tiny}, shows that the algorithm is as good as converged after only about 100 iterations. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{../../result_tiny/figure.pdf}
+    \caption{Convergence graph showing the size of the box for \texttt{ACASXU-\_run2a-\_1\_1\_tiny}, with the output constraint of $y_2 < 0.8$ }
+    \label{fig:convergence-graph-acas-tiny}
+\end{figure}
+ 
+Figure \ref{fig:input-0-1_output-2} shows the resulting box for the first two dimensions, together with the output values of the DNN. The background for Figure \ref{fig:input-0-1_output-2} shows the DNN output values where the input variables not listed in the particular picture are fixed at zero. This figure shows that while the box is of substantial size, there exists differencing values for the box widths, that are pareto optimal. This can be seen since the non white area is substantially larger than the red box, and This likely means that a combination of the input variables is violating the constraint in these areas.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{../../../result/input-0-1_output-2.pdf}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{../../../result/input-2-3_output-2.pdf}
+    \end{subfigure}
+        \caption{Different input variables and the networks response to the inputs(all inputs not shown are fixed at zero), here wite is used to signify the output constraint is not met in these regions. The red boxes show the values found by the algorithm. }
+    \label{fig:input-0-1_output-2}
+\end{figure}
+
+\end{document}
+

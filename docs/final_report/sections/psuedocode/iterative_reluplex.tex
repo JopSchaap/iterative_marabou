@@ -1,0 +1,34 @@
+\begin{algorithmic}[1]
+    \State $LB_{pessimistic}[\#parameters] \gets [0]$
+    \State $LB_{optimistic}[\#parameters] \gets [- \infty]$
+    \State $UB_{pessimistic}[\#parameters] \gets [ 0]$
+    \State $UB_{optimistic}[\#parameters] \gets [ \infty]$
+    \item[]
+    \While{$time\_to\_run > 0$}
+        \State $dim \gets \text{random\_dim}()$
+        \Comment{Optimize the lower bound}
+        \State $mid \gets (LB_{pessimistic}[dim] + LB_{optimistic}[dim]) / 2$ \Comment{Get the midpoint}
+        \State $\text{addProperty}(input\_parameters[dim] \geq mid)$
+        \State $upholds \gets \text{check\_properties}()$
+        \If{$upholds$}
+            \State $LB_{pessimistic}[dim] \gets mid$
+            \Comment{If the properties still hold we found a better bound}
+        \Else
+            \State $\text{remove\_last\_property}()$
+            \State $LB_{optimistic} \gets mid$
+            \Comment{If the properties donnot hold we find a limitation of the bound}
+        \EndIf
+        \item[]
+        \State $mid \gets (UB_{pessimistic}[dim] + UB_{optimistic}[dim]) / 2$ 
+        \Comment{Optimize the upper bound}
+        \State $\text{addProperty}(input\_parameters[dim] \leq mid)$
+        \State $upholds \gets \text{check\_properties}()$
+        \If{$upholds$}
+            \State $UB_{pessimistic}[dim] \gets mid$
+        \Else
+            \State $\text{remove\_last\_property}()$
+            \State $UB_{optimistic} \gets mid$
+        \EndIf
+    \EndWhile
+    \State \Return $LB_{pessimistic}, UB_{pessimistic}$
+\end{algorithmic}
