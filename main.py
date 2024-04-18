@@ -58,7 +58,7 @@ def plot_time_per_iteration(time_spent):
     plt.ylabel("time spent solving")
     saveFig("time_spent")
 
-def plot_response(net: Marabou.MarabouNetwork, axis = [0,1], out_axis=None, min_value=-1.0, max_value=1.0, nSamples=(30, 30), base = None, box=None):
+def plot_response(net: Marabou.MarabouNetwork, axis = [0,1], out_axis=None, min_value=-1.0, max_value=1.0, nSamples=(50, 50), base = None, box=None):
     nOutputVars = len(net.outputVars[0][0])
     out_axis = out_axis or np.arange(nOutputVars)
     result = np.zeros((len(out_axis),*nSamples))
@@ -139,9 +139,7 @@ if __name__ == "__main__":
     # plot_response(net,axis = [0,4], out_axis=[2], box=iterator.lower_bounds)
     eprint(iterator.lower_bounds)
     for axis in itertools.combinations(range(iterator.n_in_vars),2):
-        print(axis)
-        plot_response(net,list(axis), out_axis=[4], box=iterator.lower_bounds)
-        break
+        plot_response(net,list(axis), out_axis=[2], box=iterator.lower_bounds)
 
     # exit_code, vals, stats = net.solve("out.txt", True, Marabou.createOptions())
     # stats: mb_core.Statistics = stats
