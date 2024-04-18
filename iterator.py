@@ -36,8 +36,8 @@ def getStatistics(stats: mb_core.Statistics) -> dict:
 
 class Iterator(object):
     # Iterator settings
-    max_iterations = 50
-    marabou_options = Marabou.createOptions(timeoutInSeconds=90)
+    max_iterations = 200
+    marabou_options = Marabou.createOptions(timeoutInSeconds=4*60)
     marabou_verbose = False
     verbose = True
     point_select = 0.5
@@ -71,7 +71,7 @@ class Iterator(object):
     def solve(self) -> Tuple[bool, None|np.ndarray]:
         exit_code, vals, stats = self.net.solve(self.marabou_out_file(), self.marabou_verbose, self.marabou_options)
         self.stat_list.append(getStatistics(stats))
-        return exit_code == "sat", vals
+        return exit_code != "unsat", vals
 
     def step_bound(self, dim: int, neg_or_pos: int):
         lb = self.lower_bounds[dim, neg_or_pos]
