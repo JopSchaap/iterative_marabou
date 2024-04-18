@@ -36,19 +36,15 @@ def getStatistics(stats: mb_core.Statistics) -> dict:
 
 class Iterator(object):
     # Iterator settings
-    max_iterations = 500
-    marabou_options = Marabou.createOptions()
+    max_iterations = 50
+    marabou_options = Marabou.createOptions(timeoutInSeconds=90)
     marabou_verbose = False
     verbose = True
-    point_select = 0.01
+    point_select = 0.5
     epsilon = 0.001
 
     # Holds test data
-    chosen_dim_list = []
-    stat_list = []
-    time_list = []
-    box_size_optimistic_list = []
-    box_size_pessimistic_list = []
+
 
     def __init__(self, net: Marabou.MarabouNetworkNNet, rng = np.random.default_rng(), starting_upper_bound = 1) -> None:
         self.net = net
@@ -62,6 +58,11 @@ class Iterator(object):
             # start with lower bound all bounds set to [0.0, 0.0]
             self.net.setLowerBound(input_var, 0.0)
             self.net.setUpperBound(input_var, 0.0)
+        self.chosen_dim_list = []
+        self.stat_list = []
+        self.time_list = []
+        self.box_size_optimistic_list = []
+        self.box_size_pessimistic_list = []
         self.solve()
 
     def marabou_out_file(self):
@@ -69,7 +70,7 @@ class Iterator(object):
 
     def solve(self) -> Tuple[bool, None|np.ndarray]:
         exit_code, vals, stats = self.net.solve(self.marabou_out_file(), self.marabou_verbose, self.marabou_options)
-        self.stat_list.append(stats)
+        self.stat_list.append(getStatistics(stats))
         return exit_code == "sat", vals
 
     def step_bound(self, dim: int, neg_or_pos: int):
